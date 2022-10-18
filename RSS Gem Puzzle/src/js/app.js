@@ -1,14 +1,25 @@
+import "../style/style.scss";
+import { addValues } from "./addPuzzle";
+
+addValues(16);
 
 // генерим квадраты
-const puzzleContainer = document.querySelector('.puzzle__container')
-// console.log(puzzleContainer)
-let number = 16
-let valuesPuzzle = new Array(number).fill(0).map((_item, index)=>{
-    return index+1
-})
+// const puzzleContainer = document.querySelector(".puzzle__container");
+// let number = 16;
+// function addValues(counts) {
+//   let valuesPuzzle = new Array(counts).fill(0).map((item, index) => {
+//     return index + 1;
+//   });
+//   console.log(valuesPuzzle);
 
-console.log(valuesPuzzle)
+//   for (let value in valuesPuzzle) {
+//     console.log(value);
+//     const puzzleNumber = document.createElement("button");
+//     puzzleNumber.classList.add("puzzle_button");
+//     puzzleContainer.appendChild(puzzleNumber);
+//     // console.log(elem + )
+//     puzzleNumber.innerText = value;
+//   }
+// }
 
-function addValues(){
-
-}
+// addValues(16);

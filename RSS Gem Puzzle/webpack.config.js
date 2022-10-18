@@ -28,7 +28,7 @@ const HtmlWebpackHarddiskPlugin = require("html-webpack-harddisk-plugin");
 
 module.exports = {
   entry: {
-    index: './src/js/app.js'
+    index: "./src/js/app.js",
     // main: "./pages/main/script.js",
     // donate: "./pages/donate/script.js",
     // ...generateMultipleJsEntries(APP_PAGES),
@@ -48,13 +48,13 @@ module.exports = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      title: 'RSS Gem Puzzle',
+      title: "RSS Gem Puzzle",
       alwaysWriteToDisk: true,
-      template: path.join(__dirname, "src",  "index.html"),
+      template: path.join(__dirname, "src", "index.html"),
       filename: `index.html`,
-      chunks: `index.html`,
+      chunks: "index.html",
       // favicon: "./src/img/favicon.png",
-        clean: true,
+      clean: true,
     }),
     new HtmlWebpackHarddiskPlugin(),
     // ...generateMultiplePages(APP_PAGES),

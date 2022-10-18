@@ -12,15 +12,19 @@ export function addValues(counts) {
   let valuesPuzzle = new Array(counts).fill(0).map((item, index) => {
     return index + 1;
   });
-  console.log(valuesPuzzle);
+  //   console.log(valuesPuzzle);
 
   for (let value of valuesPuzzle) {
-    console.log(value);
+    // console.log(value);
     const puzzleNumber = document.createElement("button");
     puzzleNumber.classList.add("item");
+    puzzleNumber.setAttribute('data-matrix-id', value);
     puzzleNumber.innerHTML = `<span class="button-border">${value}</span>`;
     // puzzleNumber.createElement(span);
     puzzleContainer.appendChild(puzzleNumber);
+
+    // puzzleNumber.data-matrix-id = value;
+
     // console.log(elem + )
     // puzzleNumber.innerText = value;
   }

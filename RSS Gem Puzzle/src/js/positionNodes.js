@@ -1,15 +1,18 @@
-export function getMatrix(array){
-    const matrix = [[], [], [], []]
+export function getMatrix(array, matrix = [[], [], [], []], count = 4){
+    // const matrix = [[], [], [], []]
+    // const matrix = [[], [], []]
+    // const count = 4
     let y = 0
     let x = 0
-
+    // console.log(array.length)
     for(let i = 0; i< array.length; i++){
-        if(x >= 4){
+        if(x >= count){
             y++;
             x=0
         }
 
         matrix[y][x] = array[i]
+        // console.log(matrix[y][x] = array[i])
         x++
     }
 
@@ -31,3 +34,5 @@ export function setNodeStyles(node, x, y){
     const shiftPs = 100
     node.style.transform = `translate3D(${x * shiftPs}%, ${y * shiftPs}%, 0)`
 }
+
+

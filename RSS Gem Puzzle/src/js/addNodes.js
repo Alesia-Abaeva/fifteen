@@ -12,7 +12,7 @@ export function addValues(counts) {
   let valuesPuzzle = new Array(counts).fill(0).map((item, index) => {
     return index + 1;
   });
-  //   console.log(valuesPuzzle);
+    console.log(valuesPuzzle, 'valuesPuzzle');
 
   for (let value of valuesPuzzle) {
     // console.log(value);
@@ -28,6 +28,24 @@ export function addValues(counts) {
     // console.log(elem + )
     // puzzleNumber.innerText = value;
   }
+}
+
+export function removeNode(node){
+  // let nodesItem = document.querySelectorAll(`${node}`)
+  node.forEach(function (elem) {
+    elem.parentNode.removeChild(elem)})
+}
+
+export function addClass(node, clas){
+  // let nodesItem = document.querySelectorAll(`${node}`)
+  node.forEach(function (elem) {
+    elem.classList.add(clas)})
+}
+
+export function removeClass(node, clas){
+  // let nodesItem = document.querySelectorAll(`${node}`)
+  node.forEach(function (elem) {
+    elem.classList.remove(clas)})
 }
 
 // addValues(16);

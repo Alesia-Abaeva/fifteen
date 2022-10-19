@@ -134,14 +134,27 @@ html {
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
+  margin-bottom: 1.5rem;
+  margin-top: 1.5rem;
+  gap: 10px;
+
   .information{
-    width: 50%;
+    width: 45%;
     display: flex;
+    justify-content: space-evenly;
+    background-color: #e5d5f6;
 
     p{
       margin: 0;
       padding: 0;
     }
   }
+}
+
+.puzzle__button_container{
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  flex-wrap: wrap;
 }
 

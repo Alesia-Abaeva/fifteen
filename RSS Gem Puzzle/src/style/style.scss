@@ -1,5 +1,6 @@
 html {
   font: 16px/1.4 Georgia, serif;
+  background-color: rgb(168, 166, 166);
 }
 
 .puzzle__wrapper {
@@ -47,27 +48,27 @@ html {
       box-shadow: inset 0 0 0 2px #922ec5;
     }
   }
-  .size9{
+  .size9 {
     width: 33.3%;
     height: 33.3%;
   }
-  .size16{
+  .size16 {
     width: 25%;
     height: 25%;
   }
-  .size25{
+  .size25 {
     width: 20%;
     height: 20%;
   }
-  .size36{
+  .size36 {
     width: 16.67%;
     height: 16.67%;
   }
-  .size49{
+  .size49 {
     width: 14.25%;
     height: 14.25%;
   }
-  .size64{
+  .size64 {
     width: 12.5%;
     height: 12.5%;
   }
@@ -91,21 +92,20 @@ html {
   }
 }
 
-.puzzle__won{
-  .item{
-    filter:  brightness(200%);
-
+.puzzle__won {
+  .item {
+    filter: brightness(200%);
   }
 }
 
-.puzzle__size{
+.puzzle__size {
   width: 100%;
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
   gap: 15px;
 
-  .size__format{
+  .size__format {
     // margin-left: 1.5em;
     margin-bottom: 0.5rem;
     padding: 0.5em 1em;
@@ -114,23 +114,22 @@ html {
     font: 1.2rem;
     border: none;
     cursor: pointer;
-        
 
-  &:first-child{
-    margin-left: 0;
-  }
+    &:first-child {
+      margin-left: 0;
+    }
 
     // display: ;
   }
 
-  .active-button{
+  .active-button {
     border: 2px solid #922ec5;
     background: #e5d5f6;
     color: #000;
   }
 }
 
-.puzzle__information{
+.puzzle__information {
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
@@ -138,23 +137,32 @@ html {
   margin-top: 1.5rem;
   gap: 10px;
 
-  .information{
+  .information {
     width: 45%;
     display: flex;
     justify-content: space-evenly;
     background-color: #e5d5f6;
 
-    p{
+    p {
       margin: 0;
       padding: 0;
     }
   }
 }
 
-.puzzle__button_container{
+.puzzle__button_container {
   display: flex;
   justify-content: space-between;
   width: 100%;
   flex-wrap: wrap;
 }
 
+.soundOn {
+  // border: 1px solid #922ec5;
+  background: #e5d5f6;
+  color: #000;
+}
+
+.soundOff {
+  background: rgb(65, 65, 65);
+}

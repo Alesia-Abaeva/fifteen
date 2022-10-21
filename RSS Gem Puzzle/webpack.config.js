@@ -28,7 +28,7 @@ const HtmlWebpackHarddiskPlugin = require("html-webpack-harddisk-plugin");
 
 module.exports = {
   entry: {
-    index: "./src/js/app.js",
+    index: "./src/js/index.js",
     // main: "./pages/main/script.js",
     // donate: "./pages/donate/script.js",
     // ...generateMultipleJsEntries(APP_PAGES),

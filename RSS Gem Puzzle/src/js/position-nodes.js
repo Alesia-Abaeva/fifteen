@@ -1,6 +1,7 @@
 export function getMatrix(array, matrix = [[], [], [], []], count = 4) {
   let y = 0;
   let x = 0;
+
   for (let i = 0; i < array.length; i++) {
     if (x >= count) {
       y++;

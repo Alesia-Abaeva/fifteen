@@ -1,11 +1,3 @@
-// console.log(puzzleContainer)
-// let number = 16;
-// let valuesPuzzle = new Array(number).fill(0).map((_item, index)=>{
-//     return index+1
-// })
-
-// console.log(valuesPuzzle)
-
 export function addValues(counts) {
   const puzzleContainer = document.querySelector(".puzzle__container");
 
@@ -15,22 +7,18 @@ export function addValues(counts) {
   console.log(valuesPuzzle, "valuesPuzzle");
 
   for (let value of valuesPuzzle) {
-    // console.log(value);
     const puzzleNumber = document.createElement("button");
     puzzleNumber.classList.add("item");
     puzzleNumber.setAttribute("data-matrix-id", value);
+    puzzleNumber.setAttribute("draggable", true);
+
     puzzleNumber.innerHTML = `<span class="button-border">${value}</span>`;
-    // puzzleNumber.createElement(span);
     puzzleContainer.appendChild(puzzleNumber);
-
-    // puzzleNumber.data-matrix-id = value;
-
-    // console.log(elem + )
-    // puzzleNumber.innerText = value;
   }
 }
 
 export function removeNode(node) {
+  console.log(node);
   // let nodesItem = document.querySelectorAll(`${node}`)
   node.forEach((elem) => {
     elem.parentNode.removeChild(elem);
@@ -63,7 +51,7 @@ export function removeClass(node, clas) {
 // ++++++ игра может быть перезапущена без перезагрузки страницы
 // ++++++ отображение продолжительности игры в минутах и секундах "##:##" и количества ходов
 // реализация функциональности для сохранения игры (например, с помощью localStorage), так что при перезагрузке страницы игрок может продолжить с того места, где он остановился выключен
-// есть возможность включать / выключать звуковое сопровождение движения плиток
+// ++++++ есть возможность включать / выключать звуковое сопровождение движения плиток
 // ++++++ реализована функциональность выбора размера кадра: от 3 × 3 до 8
 // 10 лучших результатов сохраняются в таблице рекордов и могут быть просмотрены любым способом (например, нажатием кнопки)
 // дополнительные (для получения дополнительных очков):
@@ -102,7 +90,7 @@ export function removeClass(node, clas) {
 // Расширенные возможности +50
 // ++++++ игра может быть перезапущена без перезагрузки страницы: +10
 // ++++++ отображаются продолжительность игры и количество ходов: +10
-// звуковое сопровождение (включение / выключение) перемещения плиток: +10
+// ++++++ звуковое сопровождение (включение / выключение) перемещения плиток: +10
 // реализовано сохранение состояния игры и сохранение 10 лучших результатов с помощью localStorage: +10
 // ++++++ реализован выбор разных размеров для рамы: +10
 

@@ -4,12 +4,16 @@ import { getMatrix, setNodeStyles } from "./positionNodes";
 import { findCoordinatesByNumber, isValidForSwap } from "./findValid";
 import { generateMatrix, shuffleaAray } from "./helpers";
 import audio1 from "assets/sounds/audio_1.mp3";
+import { setLocalStorage, getLocalStorage } from "./local-storage";
+import { LOCAL_STORAGE_KEYS } from "./const";
 
 let countItem = 16;
 let itemLineNumber = Math.sqrt(countItem);
 let shablonMatrix;
 let winArray = new Array(countItem).fill(0).map((item, i) => i + 1);
 let stateSound = true;
+
+// остановилась на переменной countItem -  если брать ее из объекта, то руинится все, потому что инициализация идет до объявления переменной
 
 addValues(countItem);
 
@@ -19,60 +23,27 @@ const sizeButton = [...document.querySelectorAll(".size__format")];
 const machCount = document.querySelector(".count");
 const timerPuzzle = document.querySelector(".timer");
 const buttonMusic = document.getElementById("stop");
+const buttonSave = document.getElementById("save");
 const moveSound = new Audio();
 moveSound.src = audio1;
-
-function sound() {
-  if (stateSound) {
-    buttonMusic.innerHTML = "Sound Off";
-    buttonMusic.classList.remove("soundOn");
-    buttonMusic.classList.add("soundOff");
-    stateSound = false;
-  } else {
-    buttonMusic.innerHTML = "Sound On";
-    buttonMusic.classList.remove("soundOff");
-    buttonMusic.classList.add("soundOn");
-    stateSound = true;
-  }
-}
-
-async function playSound(state, sound) {
-  if (state) {
-    sound.currentTime = 0.0;
-    await sound.play();
-  } else {
-    console.log(sound.currentTime, "end");
-    await sound.pause();
-    sound.currentTime = 0.0;
-  }
-}
 
 buttonMusic.onclick = () => {
   sound();
 };
 
+buttonSave.onclick = () => {
+  setLocalStorage(state, LOCAL_STORAGE_KEYS.STORAGE);
+};
+
 // counts
 
-// let counts = 0;
-
 // time
-
+// let firstClick = false;
+// let counts = 0;
 // let seconds = 0;
 // let minutes = 0;
 let time;
 let clockTick;
-// let firstClick = false;
-
-// function init() {
-//   addValues(countItem);
-//   itemNodes[countItem - 1].style.display = "none";
-//   // let matrixOrigin = getMatrix(
-//   //   itemNodes.map((items) => Number(items.dataset.matrixId))
-//   // );
-//   // let matrix = getMatrix(shuffleaAray(matrixOrigin.flat()));
-
-//   setPositionItems(matrix);
-// }
 
 // const
 
@@ -87,9 +58,7 @@ let matrixOrigin = getMatrix(
 );
 let matrix = getMatrix(shuffleaAray(matrixOrigin.flat()));
 
-setPositionItems(matrix);
-
-const state = {
+const state = getLocalStorage(LOCAL_STORAGE_KEYS.STORAGE) ?? {
   matrix,
   counts: 0,
   seconds: 0,
@@ -98,17 +67,13 @@ const state = {
   countItem: 16,
   time,
   clockTick,
+  winArray,
+  // countItem,
 };
 
-console.log(state.firstClick);
+setPositionItems(state.matrix);
 
-// function startGame(matrix) {
-//   let shuffledArray = shuffleaAray(matrix.flat());
-//   matrix = getMatrix(shuffledArray);
-//   console.log(matrix, "shuffledArray");
-//   // return matrix;
-//   setPositionItems(matrix);
-// }
+console.log(state);
 
 const nodeButtonLevels = ["lvl3", "lvl4", "lvl5", "lvl6", "lvl7", "lvl8"];
 nodeButtonLevels.forEach((lvl) => {
@@ -125,13 +90,6 @@ nodeButtonLevels.forEach((lvl) => {
   };
 });
 
-// size9.onclick = () => {
-//   removeClass(sizeButton, "active-button");
-//   size9.classList.add("active-button");
-//   changeSize(9, generateMatrix(3), "size9");
-//   //   changeSize(9, [[], [], []], "size9");
-// };
-
 function setPositionItems(matrix) {
   for (let y = 0; y < matrix.length; y++) {
     for (let x = 0; x < matrix[y].length; x++) {
@@ -147,17 +105,17 @@ function setPositionItems(matrix) {
 const shuffleButton = document.getElementById("shuffle");
 
 shuffleButton.onclick = () => {
-  const flatMatrix = matrix.flat();
+  const flatMatrix = state.matrix.flat();
   const shuffledArray = shuffleaAray(flatMatrix);
-  matrix = getMatrix(shuffledArray, shablonMatrix, itemLineNumber);
-  setPositionItems(matrix);
+  state.matrix = getMatrix(shuffledArray, shablonMatrix, itemLineNumber);
+  setPositionItems(state.matrix);
   resetCounter();
   resetTime();
 };
 
 // 3. Change position by click
 
-let blankNumber = countItem;
+let blankNumber = state.countItem;
 
 container.addEventListener("click", (event) => {
   const buttonNode = event.target.closest("button");
@@ -167,15 +125,15 @@ container.addEventListener("click", (event) => {
   }
 
   const buttonNumber = Number(buttonNode.dataset.matrixId);
-  const buttonCoords = findCoordinatesByNumber(buttonNumber, matrix);
-  const blankCoords = findCoordinatesByNumber(blankNumber, matrix);
+  const buttonCoords = findCoordinatesByNumber(buttonNumber, state.matrix);
+  const blankCoords = findCoordinatesByNumber(blankNumber, state.matrix);
   const isValide = isValidForSwap(buttonCoords, blankCoords);
   if (isValide) {
     console.log("dsd");
     // timer
     if (!state.firstClick) {
       startTime();
-      clockTick = setInterval(startTime, 1000);
+      state.clockTick = setInterval(startTime, 1000);
       state.firstClick = true;
     }
 
@@ -184,25 +142,25 @@ container.addEventListener("click", (event) => {
     // machCount.innerHTML = `${counts}`;
     state.counts += 1;
     machCount.innerHTML = `${state.counts}`;
-    console.log(state);
 
-    swap(blankCoords, buttonCoords, matrix), setPositionItems(matrix);
+    swap(blankCoords, buttonCoords, state.matrix, state.winArray),
+      setPositionItems(state.matrix);
   }
 });
 
-function swap(coorder1, coorder2, matrix) {
+function swap(coorder1, coorder2, matrix, winArray) {
   const coords1Number = matrix[coorder1.y][coorder1.x];
   matrix[coorder1.y][coorder1.x] = matrix[coorder2.y][coorder2.x];
   matrix[coorder2.y][coorder2.x] = coords1Number;
   playSound(stateSound, moveSound);
 
-  if (isWon(matrix)) {
+  if (isWon(matrix, winArray)) {
     addWonClass();
     stopTime();
   }
 }
 
-function isWon(matrix) {
+function isWon(matrix, winArray) {
   const flatMatrix = matrix.flat();
   for (let i = 0; i < winArray.length; i++) {
     if (flatMatrix[i] !== winArray[i]) {
@@ -228,32 +186,32 @@ function addWonClass() {
 // TODO - добавить сюда  when the game is finished, the following message is displayed "Hooray! You solved the puzzle in ##:## and N moves!". So that shuffled algorithm should work correctly - user can solve puzzle +10
 
 // 4. Change size
-function changeSize(number, matrixShablon, newStyle) {
+function changeSize(number, template, newStyle) {
   let numberLine = Math.sqrt(number);
-  countItem = number;
+  state.countItem = number;
   blankNumber = number;
   itemLineNumber = numberLine;
-  shablonMatrix = matrixShablon;
-  winArray = new Array(countItem).fill(0).map((item, i) => i + 1);
+  shablonMatrix = template;
+  state.winArray = new Array(state.countItem).fill(0).map((item, i) => i + 1);
 
   removeNode(itemNodes);
 
   addValues(number);
   itemNodes = Array.from(document.querySelectorAll(".item"));
 
-  itemNodes[countItem - 1].style.display = "none";
+  itemNodes[state.countItem - 1].style.display = "none";
   addClass(itemNodes, `${newStyle}`);
 
-  matrix = getMatrix(
+  state.matrix = getMatrix(
     itemNodes.map((items) => Number(items.dataset.matrixId)),
-    matrixShablon,
+    template,
     numberLine
   );
-  let shuffledArray = shuffleaAray(matrix.flat());
-  matrix = getMatrix(shuffledArray, matrixShablon, numberLine);
-  setPositionItems(matrix);
+  let shuffledArray = shuffleaAray(state.matrix.flat());
+  state.matrix = getMatrix(shuffledArray, template, numberLine);
+  setPositionItems(state.matrix);
 
-  return matrix;
+  return state.matrix;
 }
 
 // 5. Time
@@ -276,7 +234,7 @@ function startTime() {
 // stop timer for game
 function stopTime() {
   let finalTime = state.time;
-  clearInterval(clockTick);
+  clearInterval(state.clockTick);
   state.firstClick = false;
 }
 
@@ -289,34 +247,39 @@ function resetTime() {
 }
 
 // 6. Try
+function initPuzzleInformation() {
+  machCount.innerHTML = `${state.counts}`;
+  timerPuzzle.innerText = state.time;
+}
+initPuzzleInformation();
+
 function resetCounter() {
   state.counts = 0; //add
   machCount.innerHTML = `${state.counts}`;
 }
 
-// ---------------------------------------------------------------------------
-//
-// ---------------------------------------------------------------------------
-
-// container.classList.add('.')
-// itemNodes  чтобы изменить им стиль, нужно пробежаться массивом по всем нодам
-// console.log(itemNodes)
-
-// Music
-
-function setLocalStorage(value, key) {
-  localStorage.setItem(key, JSON.stringify(value));
+// Sound
+async function playSound(state, sound) {
+  if (state) {
+    sound.currentTime = 0.0;
+    await sound.play();
+  } else {
+    // console.log(sound.currentTime, "end");
+    await sound.pause();
+    sound.currentTime = 0.0;
+  }
 }
 
-// if (localStorage.getItem("city")) {
-//   city.value = localStorage.getItem("city");
-// } else city.value = "Minsk";
-setLocalStorage(state, "state");
-// console.log(localStorage.getItem("state"));
-// localStorage.setItem("state", state);
-console.log(localStorage.getItem("state"));
-const raww = localStorage.getItem("state");
-
-console.log(JSON.parse(raww));
-
-function getLocalStorage(value, constants) {}
+function sound() {
+  if (stateSound) {
+    buttonMusic.innerHTML = "Sound Off";
+    buttonMusic.classList.remove("soundOn");
+    buttonMusic.classList.add("soundOff");
+    stateSound = false;
+  } else {
+    buttonMusic.innerHTML = "Sound On";
+    buttonMusic.classList.remove("soundOff");
+    buttonMusic.classList.add("soundOn");
+    stateSound = true;
+  }
+}

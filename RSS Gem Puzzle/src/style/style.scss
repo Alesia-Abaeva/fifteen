@@ -166,3 +166,10 @@ html {
 .soundOff {
   background: rgb(65, 65, 65);
 }
+
+#results {
+  margin-top: 1.5em;
+  display: flex;
+  background: none;
+  border: 1px solid black;
+}

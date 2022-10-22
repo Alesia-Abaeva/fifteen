@@ -171,5 +171,23 @@ html {
   margin-top: 1.5em;
   display: flex;
   background: none;
-  border: 1px solid black;
+  border: 1px solid #e5d5f6;
+  border-bottom: 0;
+}
+
+.results_best {
+  background-color: #e5d5f6;
+  display: flex;
+  justify-content: space-evenly;
+  gap: 20px;
+
+  h4 {
+    margin: 0;
+    padding: 0;
+  }
+
+  p {
+    margin: 0;
+    padding: 0;
+  }
 }

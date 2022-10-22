@@ -1,10 +1,11 @@
+import { getLocalStorage } from "./local-storage";
+
 export function addValues(counts) {
   const puzzleContainer = document.querySelector(".puzzle__container");
 
   let valuesPuzzle = new Array(counts).fill(0).map((item, index) => {
     return index + 1;
   });
-  console.log(valuesPuzzle, "valuesPuzzle");
 
   for (let value of valuesPuzzle) {
     const puzzleNumber = document.createElement("button");
@@ -12,7 +13,7 @@ export function addValues(counts) {
     puzzleNumber.setAttribute("data-matrix-id", value);
     puzzleNumber.setAttribute("draggable", true);
 
-    puzzleNumber.innerHTML = `<span class="button-border">${value}</span>`;
+    puzzleNumber.innerHTML = `<span class="button-border" draggable=true>${value}</span>`;
     puzzleContainer.appendChild(puzzleNumber);
   }
 }
@@ -39,6 +40,50 @@ export function removeClass(node, clas) {
   });
 }
 
+export function addResults() {
+  const puzzleResults = document.querySelector(".puzzle__results");
+  const resultButton = document.createElement("button");
+
+  resultButton.classList.add("button__function");
+  resultButton.classList.add("result_button");
+  resultButton.setAttribute("id", "results");
+  resultButton.innerText = "Results";
+  puzzleResults.appendChild(resultButton);
+
+  const containerResult = document.createElement("div");
+  containerResult.classList.add("results_best");
+
+  puzzleResults.appendChild(containerResult);
+
+  const movesNode = createElements(containerResult, "div", "result_moves");
+  const movesTitle = createElements(movesNode, "h4", "moves_title");
+  movesTitle.innerHTML = "Moves";
+
+  const timeNode = createElements(containerResult, "div", "result_time");
+  const timeTitle = createElements(timeNode, "h4", "time_title");
+  timeTitle.innerHTML = "Time";
+  // createElements(, "div", "result_time");
+}
+
+function randerButton(text, callback) {
+  const button = 0;
+}
+
+export const createElements = (parentNode, element, style_class) => {
+  const node = document.createElement(`${element}`);
+  node.classList.add(`${style_class}`);
+  parentNode.appendChild(node);
+
+  return node;
+};
+
+// const addResultInLocal = () => {
+//   const nodeTime = document.querySelector(".result_time");
+//   const nodeMoves = document.querySelector(".result_moves");
+
+//   getLocalStorage(LOCAL_STORAGE_KEYS.RESULTS);
+// };
+
 // Основные функциональные требования
 // Базовый (обязательно):
 // ++++++ дизайн должен быть адаптивным, который включает в себя рабочий стол (1280 пикселей <= ширина), планшет (768 пикселей <= ширина < 1280 пикселей) и мобильный телефон (320 пикселей <= ширина < 768 пикселей). При переключении между версиями все должно отображаться корректно, вся функциональность должна присутствовать, ничто не должно исчезать или выходить за пределы экрана. Допустимо изменить внешний вид для мобильной версии (например, скрыть кнопки в меню бургера).
@@ -50,7 +95,7 @@ export function removeClass(node, clas) {
 // Передовой:
 // ++++++ игра может быть перезапущена без перезагрузки страницы
 // ++++++ отображение продолжительности игры в минутах и секундах "##:##" и количества ходов
-// реализация функциональности для сохранения игры (например, с помощью localStorage), так что при перезагрузке страницы игрок может продолжить с того места, где он остановился выключен
+// ++++++ реализация функциональности для сохранения игры (например, с помощью localStorage), так что при перезагрузке страницы игрок может продолжить с того места, где он остановился выключен
 // ++++++ есть возможность включать / выключать звуковое сопровождение движения плиток
 // ++++++ реализована функциональность выбора размера кадра: от 3 × 3 до 8
 // 10 лучших результатов сохраняются в таблице рекордов и могут быть просмотрены любым способом (например, нажатием кнопки)
@@ -91,10 +136,10 @@ export function removeClass(node, clas) {
 // ++++++ игра может быть перезапущена без перезагрузки страницы: +10
 // ++++++ отображаются продолжительность игры и количество ходов: +10
 // ++++++ звуковое сопровождение (включение / выключение) перемещения плиток: +10
-// реализовано сохранение состояния игры и сохранение 10 лучших результатов с помощью localStorage: +10
+// ++++++ реализовано сохранение состояния игры и сохранение 10 лучших результатов с помощью localStorage: +10
 // ++++++ реализован выбор разных размеров для рамы: +10
 
 // Хакерский прицел +40
-// ++++++ когда игра будет закончена, появится следующее сообщение: "Ура! Вы решили головоломку за ##:## и N ходов!". Так что алгоритм перетасовки должен работать правильно - пользователь может решить головоломку +10
+//  ++++++ когда игра будет закончена, появится следующее сообщение: "Ура! Вы решили головоломку за ##:## и N ходов!". Так что алгоритм перетасовки должен работать правильно - пользователь может решить головоломку +10
 // анимация перемещения плиток по кадру: +15
 // плиток можно перетаскивать с помощью мыши: +15

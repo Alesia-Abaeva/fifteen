@@ -1,7 +1,7 @@
 import "../style/style.scss";
-import { addValues, removeNode, addClass, removeClass } from "./addNodes";
-import { getMatrix, setNodeStyles } from "./positionNodes";
-import { findCoordinatesByNumber, isValidForSwap } from "./findValid";
+import { addValues, removeNode, addClass, removeClass } from "./add-nodes";
+import { getMatrix, setNodeStyles } from "./position-nodes";
+import { findCoordinatesByNumber, isValidForSwap } from "./find-valid";
 import { generateMatrix, shuffleaAray } from "./helpers";
 import audio1 from "assets/sounds/audio_1.mp3";
 import { setLocalStorage, getLocalStorage } from "./local-storage";

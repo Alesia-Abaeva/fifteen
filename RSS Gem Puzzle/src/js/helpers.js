@@ -12,3 +12,9 @@ export function generateMatrix(number) {
   }
   return array;
 }
+
+export function isOdd(number) {
+  if (number % 2 == 0) {
+    return true;
+  } else return false;
+}

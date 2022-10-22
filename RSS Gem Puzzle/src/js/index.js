@@ -1,11 +1,19 @@
 import "../style/style.scss";
-import { addClass, addValues, removeClass, removeNode } from "./add-nodes";
+import {
+  addClass,
+  addResults,
+  addValues,
+  removeClass,
+  removeNode,
+} from "./add-nodes";
 import { LOCAL_STORAGE_KEYS } from "./const";
 import { findCoordinatesByNumber, isValidForSwap } from "./find-valid";
 import { generateMatrix, shuffleaAray } from "./helpers";
 import { setLocalStorage, getLocalStorage } from "./local-storage";
 import { getMatrix, setNodeStyles } from "./position-nodes";
 import audio1 from "assets/sounds/audio_1.mp3";
+import { isSolvable } from "./is-solvable";
+import { addDataInInLocal } from "./results";
 
 const state = getLocalStorage(LOCAL_STORAGE_KEYS.STORAGE) ?? {
   matrix: [],
@@ -44,30 +52,38 @@ initGame();
 function initGame() {
   console.log(getLocalStorage(LOCAL_STORAGE_KEYS.STORAGE));
   addValues(state.countItem);
+  addResults();
 
   state.itemNodes = [...document.querySelectorAll(".item")];
   state.itemNodes[state.countItem - 1].style.display = "none";
 
   addClass(state.itemNodes, `size${state.countItem}`); //!!!!!!!!!!!
 
-  //   state.matrix = getMatrix(shuffleaAray(orderMatrix.flat()));
-  //   state.matrix = getMatrix(
-  //         state.itemNodes.map((items) => Number(items.dataset.matrixId)))
   if (getLocalStorage(LOCAL_STORAGE_KEYS.STORAGE) === null) {
     let orderMatrix = getMatrix(
       state.itemNodes.map((items) => Number(items.dataset.matrixId))
     );
-    state.matrix = getMatrix(shuffleaAray(orderMatrix.flat()));
+    let matrixVerif = getMatrix(shuffleaAray(orderMatrix.flat()));
+    // state.matrix =
+
+    while (!isSolvable(matrixVerif)) {
+      matrixVerif = getMatrix(shuffleaAray(orderMatrix.flat()));
+    }
+    state.matrix = matrixVerif;
+
+    //
+    state.matrix = getMatrix(
+      state.itemNodes.map((items) => Number(items.dataset.matrixId))
+    );
   } else {
     state.matrix;
-    console.log(state.matrix);
     startTime();
     state.clockTick = setInterval(startTime, 1000);
     removeClass(sizeButton, "active-button");
     const node = document.getElementById(
       nodeButtonLevels[state.countElementInLine - 3]
     );
-    console.log(nodeButtonLevels[4]);
+
     node.classList.add("active-button");
   }
 
@@ -143,11 +159,21 @@ function changeSize(number, template, style) {
     state.countElementInLine
   );
 
-  state.matrix = getMatrix(
+  let matrixVerifSize = getMatrix(
     shuffleaAray(orderMatrix.flat()),
     template,
     state.countElementInLine
   );
+  // state.matrix =
+
+  while (!isSolvable(matrixVerifSize)) {
+    matrixVerifSize = getMatrix(
+      shuffleaAray(orderMatrix.flat()),
+      template,
+      state.countElementInLine
+    );
+  }
+  state.matrix = matrixVerifSize;
 
   setPositionItems(state.matrix, state.itemNodes);
 
@@ -157,14 +183,26 @@ function changeSize(number, template, style) {
 // Buttons Shuffle and Start
 
 shuffleButton.onclick = () => {
-  state.matrix = getMatrix(
+  let matrixVerifShuffle = getMatrix(
     shuffleaAray(state.matrix.flat()),
     state.templateMatrix,
     state.countElementInLine
   );
+  // state.matrix =
+
+  while (!isSolvable(matrixVerifShuffle)) {
+    matrixVerifShuffle = getMatrix(
+      shuffleaAray(state.matrix.flat()),
+      state.templateMatrix,
+      state.countElementInLine
+    );
+  }
+  state.matrix = matrixVerifShuffle;
+
   setPositionItems(state.matrix);
   resetCounter();
   resetTime();
+  localStorage.removeItem(LOCAL_STORAGE_KEYS.STORAGE); // очищаем local storage, так как запускаем новую игру!
 };
 
 // Change position on click
@@ -209,7 +247,13 @@ function swap(coorder1, coorder2, matrix, winArray) {
 
   if (isWon(matrix, winArray)) {
     addWonClass();
-    //   stopTime();
+    stopTime();
+    const existedResult = getLocalStorage(LOCAL_STORAGE_KEYS.RESULTS) ?? [];
+    setLocalStorage(
+      [...existedResult, { time: state.time, counts: state.counts }],
+      LOCAL_STORAGE_KEYS.RESULTS
+    ); //передаем данные по результатам
+    localStorage.removeItem(LOCAL_STORAGE_KEYS.STORAGE); // очищаем local storage, так как запускаем новую игру!
   }
 }
 
@@ -318,3 +362,5 @@ buttonSave.onclick = () => {
   state.save = true;
   setLocalStorage(state, LOCAL_STORAGE_KEYS.STORAGE);
 };
+
+addDataInInLocal();

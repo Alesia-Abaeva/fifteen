@@ -50,7 +50,7 @@ const containerResult = document.querySelector(".results_best");
 
 // Start game
 initGame();
-// randerNodes();
+
 function initGame() {
   console.log(getLocalStorage(LOCAL_STORAGE_KEYS.STORAGE));
   addValues(state.countItem);
@@ -67,7 +67,6 @@ function initGame() {
       state.itemNodes.map((items) => Number(items.dataset.matrixId))
     );
     let matrixVerif = getMatrix(shuffleaAray(orderMatrix.flat()));
-    // state.matrix =
 
     while (!isSolvable(matrixVerif)) {
       matrixVerif = getMatrix(shuffleaAray(orderMatrix.flat()));
@@ -75,9 +74,9 @@ function initGame() {
     state.matrix = matrixVerif;
 
     //
-    state.matrix = getMatrix(
-      state.itemNodes.map((items) => Number(items.dataset.matrixId))
-    );
+    // state.matrix = getMatrix(
+    //   state.itemNodes.map((items) => Number(items.dataset.matrixId))
+    // );
   } else {
     state.matrix;
     startTime();
@@ -168,7 +167,6 @@ function changeSize(number, template, style) {
     template,
     state.countElementInLine
   );
-  // state.matrix =
 
   while (!isSolvable(matrixVerifSize)) {
     matrixVerifSize = getMatrix(
@@ -192,7 +190,6 @@ shuffleButton.onclick = () => {
     state.templateMatrix,
     state.countElementInLine
   );
-  // state.matrix =
 
   while (!isSolvable(matrixVerifShuffle)) {
     matrixVerifShuffle = getMatrix(

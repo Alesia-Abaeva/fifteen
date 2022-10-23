@@ -4,11 +4,6 @@ import { getLocalStorage } from "./local-storage";
 
 export const addDataInInLocal = () => {
   const container = document.querySelector(".results_best");
-
-  // const container = document.querySelector(".results_best");
-  // const nodeMoves = createElements(container, "div", "result_moves", "Moves");
-
-  // const nodeTime = createElements(container, "div", "result_time", "Time");
   const nodeTime = document.querySelector(".result_time");
   const nodeMoves = document.querySelector(".result_moves");
   const dataLocal = getLocalStorage(LOCAL_STORAGE_KEYS.RESULTS);
@@ -17,10 +12,7 @@ export const addDataInInLocal = () => {
     return;
   }
 
-  console.log("dataLocal------->", dataLocal);
-
   const bestResult = findTenMin(dataLocal);
-  console.log("bestResult------->", bestResult);
 
   bestResult.forEach((element) => {
     addDataFromArray("p", element.counts, nodeMoves, "value-results");

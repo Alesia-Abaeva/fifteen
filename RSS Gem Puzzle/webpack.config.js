@@ -29,9 +29,6 @@ const HtmlWebpackHarddiskPlugin = require("html-webpack-harddisk-plugin");
 module.exports = {
   entry: {
     index: "./src/js/index.js",
-    // main: "./pages/main/script.js",
-    // donate: "./pages/donate/script.js",
-    // ...generateMultipleJsEntries(APP_PAGES),
   },
   devtool: "inline-source-map",
   devServer: {
@@ -53,11 +50,10 @@ module.exports = {
       template: path.join(__dirname, "src", "index.html"),
       filename: `index.html`,
       chunks: "index.html",
-      // favicon: "./src/img/favicon.png",
+      favicon: "./src/favicon.png",
       clean: true,
     }),
     new HtmlWebpackHarddiskPlugin(),
-    // ...generateMultiplePages(APP_PAGES),
   ],
   resolve: {
     alias: {

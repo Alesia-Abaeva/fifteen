@@ -264,7 +264,6 @@ async function playSound(state, sound) {
     sound.currentTime = 0.0;
     await sound.play();
   } else {
-    // console.log(sound.currentTime, "end");
     await sound.pause();
     sound.currentTime = 0.0;
   }

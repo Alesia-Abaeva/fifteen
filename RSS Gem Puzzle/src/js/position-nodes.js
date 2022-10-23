@@ -20,5 +20,4 @@ export function setNodeStyles(node, x, y) {
   setTimeout(() => {
     node.style.transform = `translate3D(${x * shiftPs}%, ${y * shiftPs}%, 0)`;
   }, 100);
-  //   node.style.transform = `translate3D(${x * shiftPs}%, ${y * shiftPs}%, 0)`;
 }

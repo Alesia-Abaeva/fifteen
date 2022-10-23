@@ -20,21 +20,19 @@ export function addValues(counts) {
 
 export function removeNode(node) {
   console.log(node);
-  // let nodesItem = document.querySelectorAll(`${node}`)
+
   node.forEach((elem) => {
     elem.parentNode.removeChild(elem);
   });
 }
 
 export function addClass(node, clas) {
-  // let nodesItem = document.querySelectorAll(`${node}`)
   node.forEach((elem) => {
     elem.classList.add(clas);
   });
 }
 
 export function removeClass(node, clas) {
-  // let nodesItem = document.querySelectorAll(`${node}`)
   node.forEach((elem) => {
     elem.classList.remove(clas);
   });
@@ -50,29 +48,39 @@ export function addResults() {
   resultButton.innerText = "Results";
   puzzleResults.appendChild(resultButton);
 
+  const containerHeader = document.createElement("div");
+  // containerHeader.classList.add("results_best");
+  containerHeader.classList.add("results_header");
+
   const containerResult = document.createElement("div");
   containerResult.classList.add("results_best");
 
+  puzzleResults.appendChild(containerHeader);
   puzzleResults.appendChild(containerResult);
 
-  const movesNode = createElements(containerResult, "div", "result_moves");
-  const movesTitle = createElements(movesNode, "h4", "moves_title");
-  movesTitle.innerHTML = "Moves";
+  const movesHeader = createElements(
+    containerHeader,
+    "div",
+    "result_moves_header",
+    "Moves"
+  );
 
-  const timeNode = createElements(containerResult, "div", "result_time");
-  const timeTitle = createElements(timeNode, "h4", "time_title");
-  timeTitle.innerHTML = "Time";
-  // createElements(, "div", "result_time");
+  const timeHeader = createElements(
+    containerHeader,
+    "div",
+    "result_time_header",
+    "Time"
+  );
+
+  const movesNode = createElements(containerResult, "div", "result_moves", " ");
+  const timeNode = createElements(containerResult, "div", "result_time", " ");
 }
 
-function randerButton(text, callback) {
-  const button = 0;
-}
-
-export const createElements = (parentNode, element, style_class) => {
+export const createElements = (parentNode, element, style_class, text) => {
   const node = document.createElement(`${element}`);
   node.classList.add(`${style_class}`);
   parentNode.appendChild(node);
+  node.innerHTML = text;
 
   return node;
 };

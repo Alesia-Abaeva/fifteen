@@ -13,7 +13,7 @@ import { setLocalStorage, getLocalStorage } from "./local-storage";
 import { getMatrix, setNodeStyles } from "./position-nodes";
 import audio1 from "assets/sounds/audio_1.mp3";
 import { isSolvable } from "./is-solvable";
-import { addDataInInLocal } from "./results";
+import { addDataInInLocal, updateResults } from "./results";
 
 const state = getLocalStorage(LOCAL_STORAGE_KEYS.STORAGE) ?? {
   matrix: [],
@@ -45,6 +45,7 @@ const wonClass = "puzzle__won";
 const moveSound = new Audio();
 moveSound.src = audio1;
 const nodeButtonLevels = ["lvl3", "lvl4", "lvl5", "lvl6", "lvl7", "lvl8"];
+const containerResult = document.querySelector(".results_best");
 
 // Start game
 initGame();
@@ -53,6 +54,7 @@ function initGame() {
   console.log(getLocalStorage(LOCAL_STORAGE_KEYS.STORAGE));
   addValues(state.countItem);
   addResults();
+  addDataInInLocal();
 
   state.itemNodes = [...document.querySelectorAll(".item")];
   state.itemNodes[state.countItem - 1].style.display = "none";
@@ -254,6 +256,20 @@ function swap(coorder1, coorder2, matrix, winArray) {
       LOCAL_STORAGE_KEYS.RESULTS
     ); //передаем данные по результатам
     localStorage.removeItem(LOCAL_STORAGE_KEYS.STORAGE); // очищаем local storage, так как запускаем новую игру!
+
+    const localResult = getLocalStorage(LOCAL_STORAGE_KEYS.RESULTS);
+    console.log(localResult.length);
+    if (
+      localResult === null ||
+      localResult === undefined ||
+      localResult.length == 1
+    ) {
+      console.log("новый локал");
+      addDataInInLocal();
+    } else {
+      console.log("локал заполнег");
+      updateResults();
+    }
   }
 }
 
@@ -362,5 +378,3 @@ buttonSave.onclick = () => {
   state.save = true;
   setLocalStorage(state, LOCAL_STORAGE_KEYS.STORAGE);
 };
-
-addDataInInLocal();

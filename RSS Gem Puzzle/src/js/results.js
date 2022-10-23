@@ -26,8 +26,6 @@ export const addDataInInLocal = () => {
     addDataFromArray("p", element.counts, nodeMoves, "value-results");
     addDataFromArray("p", element.time, nodeTime, "value-results");
   });
-
-  //   getLocalStorage(LOCAL_STORAGE_KEYS.RESULTS);
 };
 
 function findTenMin(array) {
@@ -41,8 +39,8 @@ createElements;
 
 const addDataFromArray = (created, values, parentNode, style) => {
   let node = document.createElement(`${created}`);
-  node.classList.add(`${style}`);
-  node.innerText = `${values}`;
+  style && node.classList.add(`${style}`);
+  values && (node.innerText = `${values}`);
   parentNode.appendChild(node);
 };
 

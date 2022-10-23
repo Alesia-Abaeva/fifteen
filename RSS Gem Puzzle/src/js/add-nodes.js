@@ -1,4 +1,5 @@
 import { getLocalStorage } from "./local-storage";
+// import { createElements } from "./rander";
 
 export function addValues(counts) {
   const puzzleContainer = document.querySelector(".puzzle__container");
@@ -72,15 +73,15 @@ export function addResults() {
     "Time"
   );
 
-  const movesNode = createElements(containerResult, "div", "result_moves", " ");
-  const timeNode = createElements(containerResult, "div", "result_time", " ");
+  const movesNode = createElements(containerResult, "div", "result_moves");
+  const timeNode = createElements(containerResult, "div", "result_time");
 }
 
 export const createElements = (parentNode, element, style_class, text) => {
   const node = document.createElement(`${element}`);
-  node.classList.add(`${style_class}`);
+  style_class && node.classList.add(`${style_class}`);
   parentNode.appendChild(node);
-  node.innerHTML = text;
+  text && (node.innerHTML = text);
 
   return node;
 };

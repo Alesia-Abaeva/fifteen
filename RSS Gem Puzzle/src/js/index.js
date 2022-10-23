@@ -14,6 +14,7 @@ import { getMatrix, setNodeStyles } from "./position-nodes";
 import audio1 from "assets/sounds/audio_1.mp3";
 import { isSolvable } from "./is-solvable";
 import { addDataInInLocal, updateResults } from "./results";
+import { randerNodes } from "./rander";
 
 const state = getLocalStorage(LOCAL_STORAGE_KEYS.STORAGE) ?? {
   matrix: [],
@@ -33,7 +34,7 @@ const state = getLocalStorage(LOCAL_STORAGE_KEYS.STORAGE) ?? {
   save: false,
   style: "size16",
 };
-
+randerNodes();
 const sizeButton = [...document.querySelectorAll(".size__format")];
 const container = document.getElementById("conteiner_item");
 const shuffleButton = document.getElementById("shuffle");
@@ -49,7 +50,7 @@ const containerResult = document.querySelector(".results_best");
 
 // Start game
 initGame();
-
+// randerNodes();
 function initGame() {
   console.log(getLocalStorage(LOCAL_STORAGE_KEYS.STORAGE));
   addValues(state.countItem);
@@ -120,6 +121,7 @@ nodeButtonLevels.forEach((lvl) => {
   const number = Number(lvl.slice(-1));
   const sqrt = number ** 2;
 
+  console.log(node);
   node.onclick = () => {
     removeClass(sizeButton, "active-button");
     node.classList.add("active-button");

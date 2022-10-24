@@ -1,3 +1,6 @@
+@import "components/modal";
+@import "components/shadow-owerlay";
+
 html {
   font: 16px/1.4 Georgia, serif;
   background-color: rgb(168, 166, 166);
@@ -170,6 +173,7 @@ html {
   background: none;
   border: 1px solid #e5d5f6;
   border-bottom: 0;
+  margin-bottom: 0;
 }
 
 .results_best {

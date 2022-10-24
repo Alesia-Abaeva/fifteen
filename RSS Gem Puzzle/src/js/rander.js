@@ -1,7 +1,16 @@
 import { createElements } from "./add-nodes";
+import { createModal } from "./modal-win";
 
 export const randerNodes = () => {
+  const shadow = document.createElement("div");
+  shadow.setAttribute("id", "shadow_overlay");
+  shadow.classList.add("shadow_overlay");
+  document.body.appendChild(shadow);
+
+  createModal();
+
   const puzzleWrapper = document.createElement("div");
+
   puzzleWrapper.classList.add("puzzle__wrapper");
   document.body.appendChild(puzzleWrapper);
 
@@ -26,7 +35,7 @@ export const randerNodes = () => {
   randerChildNode(".puzzle__wrapper", "div", "puzzle__results");
 };
 
-const randerChildNode = (parent, node, name, text, id) => {
+export const randerChildNode = (parent, node, name, text, id) => {
   const parentHeader = document.querySelector(`${parent}`);
   const nodeElement = document.createElement(`${node}`);
 

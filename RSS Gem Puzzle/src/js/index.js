@@ -16,6 +16,7 @@ import { isSolvable } from "./is-solvable";
 import { addDataInInLocal, updateResults } from "./results";
 import { randerNodes } from "./rander";
 import { dragAndDrop } from "./drag-drop";
+import { closeModal, openModal } from "./modal-win";
 
 export const state = getLocalStorage(LOCAL_STORAGE_KEYS.STORAGE) ?? {
   matrix: [],
@@ -76,9 +77,9 @@ function initGame() {
     state.matrix = matrixVerif;
 
     //
-    // state.matrix = getMatrix(
-    //   state.itemNodes.map((items) => Number(items.dataset.matrixId))
-    // );
+    state.matrix = getMatrix(
+      state.itemNodes.map((items) => Number(items.dataset.matrixId))
+    );
   } else {
     state.matrix;
     startTime();
@@ -291,14 +292,17 @@ function isWon(matrix, winArray) {
 function addWonClass() {
   setTimeout(() => {
     container.classList.add(wonClass);
-    alert(
-      `Hooray! You solved the puzzle in ${state.time} and ${state.counts} moves!`
-    );
+    openModal(state.counts, state.time);
+    // alert(
+    //   `Hooray! You solved the puzzle in ${state.time} and ${state.counts} moves!`
+    // );
 
     setTimeout(() => {
       container.classList.remove(wonClass);
     }, 1000);
   }, 100);
+
+  closeModal();
 }
 
 async function playSound(state, sound) {
@@ -385,3 +389,11 @@ buttonSave.onclick = () => {
 };
 
 dragAndDrop();
+
+window.addEventListener("click", (event) => {
+  // if(event.target.classList.contains('pop-up')){
+  //     popUp.classList.remove('hidden')
+  //     popUp_container.classList.remove('active-popup')
+  // }
+  console.log(event.target);
+});

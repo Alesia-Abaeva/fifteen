@@ -3,7 +3,6 @@ import { ChangePositionOnClick, state } from ".";
 export function dragAndDrop() {
   const container = document.querySelector(".puzzle__container");
   const item = [...document.querySelectorAll(".item")];
-  console.log(container);
 
   item.forEach((elem) => addEventListener("dragstart", dragstart));
   item.forEach((elem) => addEventListener("dragend", dragend));

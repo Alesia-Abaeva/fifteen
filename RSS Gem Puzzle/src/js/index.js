@@ -59,6 +59,7 @@ function initGame() {
   addValues(state.countItem);
   addResults();
   addDataInInLocal();
+  dragAndDrop();
 
   state.itemNodes = [...document.querySelectorAll(".item")];
   state.itemNodes[state.countItem - 1].style.display = "none";
@@ -77,9 +78,9 @@ function initGame() {
     state.matrix = matrixVerif;
 
     //
-    state.matrix = getMatrix(
-      state.itemNodes.map((items) => Number(items.dataset.matrixId))
-    );
+    // state.matrix = getMatrix(
+    //   state.itemNodes.map((items) => Number(items.dataset.matrixId))
+    // );
   } else {
     state.matrix;
     startTime();
@@ -99,8 +100,6 @@ function initGame() {
   state.templateMatrix = generateMatrix(state.countElementInLine);
 
   initPuzzleInformation();
-
-  console.log("state INIt", state);
 }
 
 // Position puzzle
@@ -123,7 +122,6 @@ nodeButtonLevels.forEach((lvl) => {
   const number = Number(lvl.slice(-1));
   const sqrt = number ** 2;
 
-  console.log(node);
   node.onclick = () => {
     removeClass(sizeButton, "active-button");
     node.classList.add("active-button");
@@ -387,13 +385,3 @@ buttonSave.onclick = () => {
   state.save = true;
   setLocalStorage(state, LOCAL_STORAGE_KEYS.STORAGE);
 };
-
-dragAndDrop();
-
-window.addEventListener("click", (event) => {
-  // if(event.target.classList.contains('pop-up')){
-  //     popUp.classList.remove('hidden')
-  //     popUp_container.classList.remove('active-popup')
-  // }
-  console.log(event.target);
-});

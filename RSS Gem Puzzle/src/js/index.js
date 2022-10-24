@@ -15,8 +15,9 @@ import audio1 from "assets/sounds/audio_1.mp3";
 import { isSolvable } from "./is-solvable";
 import { addDataInInLocal, updateResults } from "./results";
 import { randerNodes } from "./rander";
+import { dragAndDrop } from "./drag-drop";
 
-const state = getLocalStorage(LOCAL_STORAGE_KEYS.STORAGE) ?? {
+export const state = getLocalStorage(LOCAL_STORAGE_KEYS.STORAGE) ?? {
   matrix: [],
   counts: 0,
   seconds: 0,
@@ -34,6 +35,7 @@ const state = getLocalStorage(LOCAL_STORAGE_KEYS.STORAGE) ?? {
   save: false,
   style: "size16",
 };
+
 randerNodes();
 const sizeButton = [...document.querySelectorAll(".size__format")];
 const container = document.getElementById("conteiner_item");
@@ -212,7 +214,12 @@ container.addEventListener("click", (event) => {
   ChangePositionOnClick(event, state.blankNumber, state.matrix, state.winArray);
 });
 
-const ChangePositionOnClick = (event, blankNumber, matrix, matrixWins) => {
+export const ChangePositionOnClick = (
+  event,
+  blankNumber,
+  matrix,
+  matrixWins
+) => {
   const buttonNode = event.target.closest("button");
 
   if (!buttonNode) {
@@ -224,7 +231,6 @@ const ChangePositionOnClick = (event, blankNumber, matrix, matrixWins) => {
   const blankCoords = findCoordinatesByNumber(blankNumber, matrix);
   const isValide = isValidForSwap(buttonCoords, blankCoords);
   if (isValide) {
-    console.log("dsd");
     // timer
     if (!state.firstClick) {
       startTime();
@@ -377,3 +383,5 @@ buttonSave.onclick = () => {
   state.save = true;
   setLocalStorage(state, LOCAL_STORAGE_KEYS.STORAGE);
 };
+
+dragAndDrop();

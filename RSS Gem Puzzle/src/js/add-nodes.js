@@ -14,7 +14,9 @@ export function addValues(counts) {
     puzzleNumber.setAttribute("data-matrix-id", value);
     puzzleNumber.setAttribute("draggable", true);
 
-    puzzleNumber.innerHTML = `<span class="button-border" draggable=true>${value}</span>`;
+    puzzleNumber.innerHTML = `<span class="button-border">${value}</span>`;
+    // puzzleNumber.innerHTML = `<span class="button-border" draggable=true>${value}</span>`;
+
     puzzleContainer.appendChild(puzzleNumber);
   }
 }

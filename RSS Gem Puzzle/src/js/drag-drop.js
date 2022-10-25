@@ -8,9 +8,6 @@ export function dragAndDrop() {
   item.forEach((elem) => addEventListener("dragend", dragend));
 
   container.addEventListener("dragover", dragover);
-  container.addEventListener("dragenter", dragenter);
-  container.addEventListener("dragleave", dragleave);
-  container.addEventListener("dragdrop", dragdrop);
 }
 
 function dragstart(event) {
@@ -27,11 +24,5 @@ function dragend(event) {
 }
 
 function dragover(event) {
-  event.preventDefault(); // LIFEHACK - делаем, чтобы элемент перемещался внутри дом дерева
+  event.preventDefault();
 }
-
-function dragenter(event) {}
-
-function dragleave(event) {}
-
-function dragdrop(event) {}

@@ -45,11 +45,15 @@ const timerPuzzle = document.querySelector(".timer");
 const buttonMusic = document.getElementById("stop");
 const buttonSave = document.getElementById("save");
 const machCount = document.querySelector(".count");
+const containerResult = document.querySelector(".results_best");
+const objectNodeModal = {};
+
+const nodeButtonLevels = ["lvl3", "lvl4", "lvl5", "lvl6", "lvl7", "lvl8"];
+
 const wonClass = "puzzle__won";
+
 const moveSound = new Audio();
 moveSound.src = audio1;
-const nodeButtonLevels = ["lvl3", "lvl4", "lvl5", "lvl6", "lvl7", "lvl8"];
-const containerResult = document.querySelector(".results_best");
 
 // Start game
 initGame();
@@ -60,6 +64,7 @@ function initGame() {
   addResults();
   addDataInInLocal();
   dragAndDrop();
+  // openModal();
 
   state.itemNodes = [...document.querySelectorAll(".item")];
   state.itemNodes[state.countItem - 1].style.display = "none";
@@ -77,6 +82,8 @@ function initGame() {
     }
     state.matrix = matrixVerif;
 
+    //
+    //
     //
     // state.matrix = getMatrix(
     //   state.itemNodes.map((items) => Number(items.dataset.matrixId))
@@ -290,6 +297,7 @@ function isWon(matrix, winArray) {
 function addWonClass() {
   setTimeout(() => {
     container.classList.add(wonClass);
+
     openModal(state.counts, state.time);
     // alert(
     //   `Hooray! You solved the puzzle in ${state.time} and ${state.counts} moves!`

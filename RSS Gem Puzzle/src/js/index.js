@@ -193,6 +193,10 @@ function changeSize(number, template, style) {
 // Buttons Shuffle and Start
 
 shuffleButton.onclick = () => {
+  shuffle();
+};
+
+function shuffle() {
   let matrixVerifShuffle = getMatrix(
     shuffleaAray(state.matrix.flat()),
     state.templateMatrix,
@@ -212,7 +216,7 @@ shuffleButton.onclick = () => {
   resetCounter();
   resetTime();
   localStorage.removeItem(LOCAL_STORAGE_KEYS.STORAGE); // очищаем local storage, так как запускаем новую игру!
-};
+}
 
 // Change position on click
 
@@ -308,8 +312,12 @@ function addWonClass() {
     }, 1000);
   }, 100);
 
-  closeModal();
+  closeModal(shuffle);
 }
+
+// function closeModalWindow(){
+//   closeModal();
+// }
 
 async function playSound(state, sound) {
   if (state) {

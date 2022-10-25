@@ -30,8 +30,7 @@ export function openModal(moves, time) {
   // return obj;
 }
 
-export function closeModal(object) {
-  console.log(object);
+export function closeModal(functionClose) {
   // const { shadow, modalContainer, modalWindow, modalContent, span } = object;
 
   const shadow = document.querySelector(".shadow_overlay");
@@ -46,5 +45,6 @@ export function closeModal(object) {
     shadow.classList.remove("shadow_active");
     modalContainer.classList.remove("open_modal");
     modalWindow.classList.remove("open_modal");
+    functionClose();
   };
 }

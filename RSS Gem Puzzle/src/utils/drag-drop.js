@@ -1,4 +1,4 @@
-import { ChangePositionOnClick, state } from ".";
+import { ChangePositionOnClick, state } from "../js";
 
 export function dragAndDrop() {
   const container = document.querySelector(".puzzle__container");

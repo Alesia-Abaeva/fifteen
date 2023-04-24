@@ -1,9 +1,7 @@
-import { createElements, removeNode } from "./add-nodes";
-import { LOCAL_STORAGE_KEYS } from "./const";
-import { getLocalStorage } from "./local-storage";
+import { LOCAL_STORAGE_KEYS } from "../const/local-storage";
+import { getLocalStorage, removeNode } from "../utils";
 
 export const addDataInInLocal = () => {
-  const container = document.querySelector(".results_best");
   const nodeTime = document.querySelector(".result_time");
   const nodeMoves = document.querySelector(".result_moves");
   const dataLocal = getLocalStorage(LOCAL_STORAGE_KEYS.RESULTS);
@@ -26,8 +24,6 @@ function findTenMin(array) {
     .slice(0, 10);
   return arrayMovesValues;
 }
-
-createElements;
 
 const addDataFromArray = (created, values, parentNode, style) => {
   let node = document.createElement(`${created}`);

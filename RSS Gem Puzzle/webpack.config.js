@@ -2,30 +2,6 @@ const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const HtmlWebpackHarddiskPlugin = require("html-webpack-harddisk-plugin");
 
-// const APP_PAGES = ["main", "donate"];
-
-// const generateMultiplePages = (pages) =>
-//   pages.map(
-//     (name) =>
-//       new HtmlWebpackPlugin({
-//         alwaysWriteToDisk: true,
-//         template: path.join(__dirname, "pages", name, "index.html"),
-//         filename: `${name === pages[0] ? "index" : name}.html`,
-//         chunks: [`${name}`],
-//         favicon: "./src/img/favicon.png",
-//         // clean: true,
-//       })
-//   );
-
-// const generateMultipleJsEntries = (entries) =>
-//   entries.reduce(
-//     (resultEntry, entry) => ({
-//       ...resultEntry,
-//       [entry]: path.join(__dirname, "pages", entry, "script.js"),
-//     }),
-//     {}
-//   );
-
 module.exports = {
   entry: {
     index: "./src/js/index.js",

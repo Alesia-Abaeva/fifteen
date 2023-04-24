@@ -115,11 +115,9 @@ html {
     font: 1.2rem;
     border: none;
     cursor: pointer;
-    styl &:first-child {
+    &:first-child {
       margin-left: 0;
     }
-
-    // display: ;
   }
 
   .active-button {

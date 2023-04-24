@@ -1,22 +1,27 @@
 import "../style/style.scss";
-import {
-  addClass,
-  addResults,
-  addValues,
-  removeClass,
-  removeNode,
-} from "./add-nodes";
-import { LOCAL_STORAGE_KEYS } from "./const";
-import { findCoordinatesByNumber, isValidForSwap } from "./find-valid";
-import { generateMatrix, shuffleaAray } from "./helpers";
-import { setLocalStorage, getLocalStorage } from "./local-storage";
-import { getMatrix, setNodeStyles } from "./position-nodes";
+import { addResults, addValues } from "./add-nodes";
+
 import audio1 from "assets/sounds/audio_1.mp3";
 import { isSolvable } from "./is-solvable";
 import { addDataInInLocal, updateResults } from "./results";
 import { randerNodes } from "./rander";
-import { dragAndDrop } from "./drag-drop";
+
 import { closeModal, openModal } from "./modal-win";
+import { LOCAL_STORAGE_KEYS } from "../const/local-storage";
+import {
+  addClass,
+  dragAndDrop,
+  findCoordinatesByNumber,
+  generateMatrix,
+  getLocalStorage,
+  getMatrix,
+  isValidForSwap,
+  removeClass,
+  removeNode,
+  setLocalStorage,
+  setNodeStyles,
+  shuffleArray,
+} from "../utils";
 
 export const state = getLocalStorage(LOCAL_STORAGE_KEYS.STORAGE) ?? {
   matrix: [],
@@ -45,8 +50,6 @@ const timerPuzzle = document.querySelector(".timer");
 const buttonMusic = document.getElementById("stop");
 const buttonSave = document.getElementById("save");
 const machCount = document.querySelector(".count");
-const containerResult = document.querySelector(".results_best");
-const objectNodeModal = {};
 
 const nodeButtonLevels = ["lvl3", "lvl4", "lvl5", "lvl6", "lvl7", "lvl8"];
 
@@ -59,35 +62,26 @@ moveSound.src = audio1;
 initGame();
 
 function initGame() {
-  console.log(getLocalStorage(LOCAL_STORAGE_KEYS.STORAGE));
   addValues(state.countItem);
   addResults();
   addDataInInLocal();
   dragAndDrop();
-  // openModal();
 
   state.itemNodes = [...document.querySelectorAll(".item")];
   state.itemNodes[state.countItem - 1].style.display = "none";
 
-  addClass(state.itemNodes, `size${state.countItem}`); //!!!!!!!!!!!
+  addClass(state.itemNodes, `size${state.countItem}`);
 
   if (getLocalStorage(LOCAL_STORAGE_KEYS.STORAGE) === null) {
     let orderMatrix = getMatrix(
       state.itemNodes.map((items) => Number(items.dataset.matrixId))
     );
-    let matrixVerif = getMatrix(shuffleaAray(orderMatrix.flat()));
+    let matrixVerif = getMatrix(shuffleArray(orderMatrix.flat()));
 
     while (!isSolvable(matrixVerif)) {
-      matrixVerif = getMatrix(shuffleaAray(orderMatrix.flat()));
+      matrixVerif = getMatrix(shuffleArray(orderMatrix.flat()));
     }
     state.matrix = matrixVerif;
-
-    //
-    //
-    //
-    // state.matrix = getMatrix(
-    //   state.itemNodes.map((items) => Number(items.dataset.matrixId))
-    // );
   } else {
     state.matrix;
     startTime();
@@ -111,7 +105,7 @@ function initGame() {
 
 // Position puzzle
 
-function setPositionItems(matrix, nodes) {
+function setPositionItems(matrix) {
   for (let y = 0; y < matrix.length; y++) {
     for (let x = 0; x < matrix[y].length; x++) {
       const valueCoordinat = matrix[y][x];
@@ -140,15 +134,13 @@ nodeButtonLevels.forEach((lvl) => {
 });
 
 function changeSize(number, template, style) {
-  //   state.style = style;
   state.countElementInLine = Math.sqrt(number);
-  console.log("template", template);
   state.templateMatrix = generateMatrix(state.countElementInLine);
 
   // изменяем состонияе счетчика
   state.countItem = number;
   state.blankNumber = number;
-  state.winArray = new Array(state.countItem).fill(0).map((item, i) => i + 1);
+  state.winArray = new Array(state.countItem).fill(0).map((_, i) => i + 1);
 
   //   //   удаляем ноды
   removeNode(state.itemNodes);
@@ -171,14 +163,14 @@ function changeSize(number, template, style) {
   );
 
   let matrixVerifSize = getMatrix(
-    shuffleaAray(orderMatrix.flat()),
+    shuffleArray(orderMatrix.flat()),
     template,
     state.countElementInLine
   );
 
   while (!isSolvable(matrixVerifSize)) {
     matrixVerifSize = getMatrix(
-      shuffleaAray(orderMatrix.flat()),
+      shuffleArray(orderMatrix.flat()),
       template,
       state.countElementInLine
     );
@@ -186,8 +178,6 @@ function changeSize(number, template, style) {
   state.matrix = matrixVerifSize;
 
   setPositionItems(state.matrix, state.itemNodes);
-
-  console.log("state-CHANGE", state);
 }
 
 // Buttons Shuffle and Start
@@ -198,14 +188,14 @@ shuffleButton.onclick = () => {
 
 function shuffle() {
   let matrixVerifShuffle = getMatrix(
-    shuffleaAray(state.matrix.flat()),
+    shuffleArray(state.matrix.flat()),
     state.templateMatrix,
     state.countElementInLine
   );
 
   while (!isSolvable(matrixVerifShuffle)) {
     matrixVerifShuffle = getMatrix(
-      shuffleaAray(state.matrix.flat()),
+      shuffleArray(state.matrix.flat()),
       state.templateMatrix,
       state.countElementInLine
     );
@@ -273,16 +263,14 @@ function swap(coorder1, coorder2, matrix, winArray) {
     localStorage.removeItem(LOCAL_STORAGE_KEYS.STORAGE); // очищаем local storage, так как запускаем новую игру!
 
     const localResult = getLocalStorage(LOCAL_STORAGE_KEYS.RESULTS);
-    console.log(localResult.length);
+
     if (
       localResult === null ||
       localResult === undefined ||
       localResult.length == 1
     ) {
-      console.log("новый локал");
       addDataInInLocal();
     } else {
-      console.log("локал заполнег");
       updateResults();
     }
   }
@@ -314,10 +302,6 @@ function addWonClass() {
 
   closeModal(shuffle);
 }
-
-// function closeModalWindow(){
-//   closeModal();
-// }
 
 async function playSound(state, sound) {
   if (state) {

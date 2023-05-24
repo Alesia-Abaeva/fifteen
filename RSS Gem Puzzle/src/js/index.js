@@ -1,12 +1,11 @@
 import "../style/style.scss";
-import { addResults, addValues } from "./add-nodes";
+import { addValues } from "./add-nodes";
 
 import audio1 from "assets/sounds/audio_1.mp3";
 import { isSolvable } from "./is-solvable";
 import { addDataInInLocal, updateResults } from "./results";
-import { randerNodes } from "./rander";
+import { renderNodes } from "./rander";
 
-import { closeModal, openModal } from "./modal-win";
 import { LOCAL_STORAGE_KEYS } from "../const/local-storage";
 import {
   addClass,
@@ -22,6 +21,9 @@ import {
   setNodeStyles,
   shuffleArray,
 } from "../utils";
+import { openModal } from "../components/Modal/utils/open-modal";
+import { closeModal } from "../components/Modal/utils/close-modal";
+import { Results } from "../components/Result/Result";
 
 export const state = getLocalStorage(LOCAL_STORAGE_KEYS.STORAGE) ?? {
   matrix: [],
@@ -42,7 +44,7 @@ export const state = getLocalStorage(LOCAL_STORAGE_KEYS.STORAGE) ?? {
   style: "size16",
 };
 
-randerNodes();
+renderNodes();
 const sizeButton = [...document.querySelectorAll(".size__format")];
 const container = document.getElementById("conteiner_item");
 const shuffleButton = document.getElementById("shuffle");
@@ -63,7 +65,7 @@ initGame();
 
 function initGame() {
   addValues(state.countItem);
-  addResults();
+  Results();
   addDataInInLocal();
   dragAndDrop();
 
@@ -291,9 +293,6 @@ function addWonClass() {
     container.classList.add(wonClass);
 
     openModal(state.counts, state.time);
-    // alert(
-    //   `Hooray! You solved the puzzle in ${state.time} and ${state.counts} moves!`
-    // );
 
     setTimeout(() => {
       container.classList.remove(wonClass);

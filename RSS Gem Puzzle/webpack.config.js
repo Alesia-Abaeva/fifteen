@@ -1,6 +1,9 @@
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const HtmlWebpackHarddiskPlugin = require("html-webpack-harddisk-plugin");
+const srcPath = path.join(__dirname, "src");
+const assetsPath = path.join(__dirname, "assets");
+const utilsPath = path.join(__dirname, "src", "utils", "index.js");
 
 module.exports = {
   entry: {
@@ -33,8 +36,9 @@ module.exports = {
   ],
   resolve: {
     alias: {
-      assets: path.resolve(__dirname, "assets"),
-      src: path.resolve(__dirname, "src"),
+      assets: assetsPath,
+      src: srcPath,
+      utils: utilsPath,
     },
   },
   module: {

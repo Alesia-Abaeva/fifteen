@@ -1,7 +1,8 @@
-import { createElements } from "../utils";
-import { createModal } from "./modal-win";
+import { ButtonSize } from "../components/Button/BSize/Size";
+import { createModal } from "../components/Modal/Modal";
+import { createElements } from "../utils/create-element";
 
-export const randerNodes = () => {
+export const renderNodes = () => {
   const shadow = document.createElement("div");
   shadow.setAttribute("id", "shadow_overlay");
   shadow.classList.add("shadow_overlay");
@@ -30,7 +31,7 @@ export const randerNodes = () => {
   );
 
   randerChildNode(".puzzle__wrapper", "div", "puzzle__size");
-  randerButtonSize(6);
+  ButtonSize(6);
 
   randerChildNode(".puzzle__wrapper", "div", "puzzle__results");
 };
@@ -48,22 +49,22 @@ export const randerChildNode = (parent, node, name, text, id) => {
   return nodeElement;
 };
 
-const randerButtonSize = (number) => {
-  const puzzleSizeContainer = document.querySelector(".puzzle__size");
+// const randerButtonSize = (number) => {
+//   const puzzleSizeContainer = document.querySelector(".puzzle__size");
 
-  for (let i = 0; i < number; i++) {
-    const inputSize = document.createElement("input");
-    inputSize.classList.add("size__format");
-    inputSize.setAttribute("id", `lvl${i + 3}`);
-    inputSize.setAttribute("type", `button`);
-    inputSize.setAttribute("value", `${i + 3}x${i + 3}`);
-    puzzleSizeContainer.appendChild(inputSize);
+//   for (let i = 0; i < number; i++) {
+//     const inputSize = document.createElement("input");
+//     inputSize.classList.add("size__format");
+//     inputSize.setAttribute("id", `lvl${i + 3}`);
+//     inputSize.setAttribute("type", `button`);
+//     inputSize.setAttribute("value", `${i + 3}x${i + 3}`);
+//     puzzleSizeContainer.appendChild(inputSize);
 
-    if (i === 1) {
-      inputSize.classList.add("active-button");
-    }
-  }
-};
+//     if (i === 1) {
+//       inputSize.classList.add("active-button");
+//     }
+//   }
+// };
 
 const rendarButtonSettins = () => {
   randerChildNode(

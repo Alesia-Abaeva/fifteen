@@ -1,8 +1,8 @@
-# Gem Puzzle ([game of fifteen](<(https://en.wikipedia.org/wiki/15_puzzle)>))
+# Gem Puzzle ([game of fifteen](https://en.wikipedia.org/wiki/15_puzzle))
 
 ## Deploy
 
-[Game of fifteen](<(https://en.wikipedia.org/wiki/15_puzzle)>)
+[Game of fifteen](https://en.wikipedia.org/wiki/15_puzzle)
 
 ## Task
 

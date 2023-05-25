@@ -2,11 +2,7 @@
 
 ## Deploy
 
-[Game of fifteen](https://en.wikipedia.org/wiki/15_puzzle)
-
-## Task
-
-Сlassic game — [Gem Puzzle](https://en.wikipedia.org/wiki/15_puzzle)
+[Game of fifteen](https://fifteen-avaeva-alesia.netlify.app/)
 
 ### Game rules
 

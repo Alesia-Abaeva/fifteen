@@ -1,12 +1,9 @@
-import "../style/style.scss";
-import { addValues } from "./add-nodes";
-
-import audio1 from "assets/sounds/audio_1.mp3";
-import { isSolvable } from "./is-solvable";
-import { addDataInInLocal, updateResults } from "./results";
-import { renderNodes } from "./rander";
-
-import { LOCAL_STORAGE_KEYS } from "../const/local-storage";
+import '../style/style.scss';
+import { addValues } from './add-nodes';
+import audio1 from 'assets/sounds/audio_1.mp3';
+import { isSolvable } from './is-solvable';
+import { addDataInInLocal, updateResults } from './results';
+import { LOCAL_STORAGE_KEYS } from '../const/local-storage';
 import {
   addClass,
   dragAndDrop,
@@ -20,10 +17,11 @@ import {
   setLocalStorage,
   setNodeStyles,
   shuffleArray,
-} from "../utils";
-import { openModal } from "../components/Modal/utils/open-modal";
-import { closeModal } from "../components/Modal/utils/close-modal";
-import { Results } from "../components/Result/Result";
+} from '../utils';
+import { openModal } from '../components/Modal/utils/open-modal';
+import { closeModal } from '../components/Modal/utils/close-modal';
+import { Results } from '../components/Result/Result';
+import { renderApp } from './app';
 
 export const state = getLocalStorage(LOCAL_STORAGE_KEYS.STORAGE) ?? {
   matrix: [],
@@ -33,29 +31,30 @@ export const state = getLocalStorage(LOCAL_STORAGE_KEYS.STORAGE) ?? {
   firstClick: false,
   countItem: 16,
   blankNumber: 16,
-  time: "0:00",
-  clockTick: "",
+  time: '0:00',
+  clockTick: '',
   winArray: [],
   itemNodes: [],
   templateMatrix: [],
   countElementInLine: 4,
   stateSound: true,
   save: false,
-  style: "size16",
+  style: 'size16',
 };
 
-renderNodes();
-const sizeButton = [...document.querySelectorAll(".size__format")];
-const container = document.getElementById("conteiner_item");
-const shuffleButton = document.getElementById("shuffle");
-const timerPuzzle = document.querySelector(".timer");
-const buttonMusic = document.getElementById("stop");
-const buttonSave = document.getElementById("save");
-const machCount = document.querySelector(".count");
+renderApp();
 
-const nodeButtonLevels = ["lvl3", "lvl4", "lvl5", "lvl6", "lvl7", "lvl8"];
+const sizeButton = [...document.querySelectorAll('.size__format')];
+const container = document.getElementById('conteiner_item');
+const shuffleButton = document.getElementById('shuffle');
+const timerPuzzle = document.querySelector('.timer');
+const buttonMusic = document.getElementById('stop');
+const buttonSave = document.getElementById('save');
+const machCount = document.querySelector('.count');
 
-const wonClass = "puzzle__won";
+const nodeButtonLevels = ['lvl3', 'lvl4', 'lvl5', 'lvl6', 'lvl7', 'lvl8'];
+
+const wonClass = 'puzzle__won';
 
 const moveSound = new Audio();
 moveSound.src = audio1;
@@ -69,15 +68,13 @@ function initGame() {
   addDataInInLocal();
   dragAndDrop();
 
-  state.itemNodes = [...document.querySelectorAll(".item")];
-  state.itemNodes[state.countItem - 1].style.display = "none";
+  state.itemNodes = [...document.querySelectorAll('.item')];
+  state.itemNodes[state.countItem - 1].style.display = 'none';
 
   addClass(state.itemNodes, `size${state.countItem}`);
 
   if (getLocalStorage(LOCAL_STORAGE_KEYS.STORAGE) === null) {
-    let orderMatrix = getMatrix(
-      state.itemNodes.map((items) => Number(items.dataset.matrixId))
-    );
+    let orderMatrix = getMatrix(state.itemNodes.map((items) => Number(items.dataset.matrixId)));
     let matrixVerif = getMatrix(shuffleArray(orderMatrix.flat()));
 
     while (!isSolvable(matrixVerif)) {
@@ -88,12 +85,10 @@ function initGame() {
     state.matrix;
     startTime();
     state.clockTick = setInterval(startTime, 1000);
-    removeClass(sizeButton, "active-button");
-    const node = document.getElementById(
-      nodeButtonLevels[state.countElementInLine - 3]
-    );
+    removeClass(sizeButton, 'active-button');
+    const node = document.getElementById(nodeButtonLevels[state.countElementInLine - 3]);
 
-    node.classList.add("active-button");
+    node.classList.add('active-button');
   }
 
   setPositionItems(state.matrix, state.itemNodes);
@@ -126,8 +121,8 @@ nodeButtonLevels.forEach((lvl) => {
   const sqrt = number ** 2;
 
   node.onclick = () => {
-    removeClass(sizeButton, "active-button");
-    node.classList.add("active-button");
+    removeClass(sizeButton, 'active-button');
+    node.classList.add('active-button');
     changeSize(sqrt, generateMatrix(number), `size${sqrt}`);
 
     resetTime();
@@ -144,38 +139,30 @@ function changeSize(number, template, style) {
   state.blankNumber = number;
   state.winArray = new Array(state.countItem).fill(0).map((_, i) => i + 1);
 
-  //   //   удаляем ноды
+  // удаляем ноды
   removeNode(state.itemNodes);
 
-  //   //   добавляем по новому счетчику
+  // добавляем по новому счетчику
   addValues(state.countItem);
 
-  //   //   обновляем значения константы
-  state.itemNodes = [...document.querySelectorAll(".item")];
-  state.itemNodes[state.countItem - 1].style.display = "none";
+  // обновляем значения константы
+  state.itemNodes = [...document.querySelectorAll('.item')];
+  state.itemNodes[state.countItem - 1].style.display = 'none';
 
-  //   //  добавляем стили
+  // добавляем стили
   addClass(state.itemNodes, `${style}`);
 
-  //  генерим новую матрицу
+  // генерим новую матрицу
   let orderMatrix = getMatrix(
     state.itemNodes.map((items) => Number(items.dataset.matrixId)),
     template,
     state.countElementInLine
   );
 
-  let matrixVerifSize = getMatrix(
-    shuffleArray(orderMatrix.flat()),
-    template,
-    state.countElementInLine
-  );
+  let matrixVerifSize = getMatrix(shuffleArray(orderMatrix.flat()), template, state.countElementInLine);
 
   while (!isSolvable(matrixVerifSize)) {
-    matrixVerifSize = getMatrix(
-      shuffleArray(orderMatrix.flat()),
-      template,
-      state.countElementInLine
-    );
+    matrixVerifSize = getMatrix(shuffleArray(orderMatrix.flat()), template, state.countElementInLine);
   }
   state.matrix = matrixVerifSize;
 
@@ -189,18 +176,10 @@ shuffleButton.onclick = () => {
 };
 
 function shuffle() {
-  let matrixVerifShuffle = getMatrix(
-    shuffleArray(state.matrix.flat()),
-    state.templateMatrix,
-    state.countElementInLine
-  );
+  let matrixVerifShuffle = getMatrix(shuffleArray(state.matrix.flat()), state.templateMatrix, state.countElementInLine);
 
   while (!isSolvable(matrixVerifShuffle)) {
-    matrixVerifShuffle = getMatrix(
-      shuffleArray(state.matrix.flat()),
-      state.templateMatrix,
-      state.countElementInLine
-    );
+    matrixVerifShuffle = getMatrix(shuffleArray(state.matrix.flat()), state.templateMatrix, state.countElementInLine);
   }
   state.matrix = matrixVerifShuffle;
 
@@ -212,17 +191,12 @@ function shuffle() {
 
 // Change position on click
 
-container.addEventListener("click", (event) => {
+container.addEventListener('click', (event) => {
   ChangePositionOnClick(event, state.blankNumber, state.matrix, state.winArray);
 });
 
-export const ChangePositionOnClick = (
-  event,
-  blankNumber,
-  matrix,
-  matrixWins
-) => {
-  const buttonNode = event.target.closest("button");
+export const ChangePositionOnClick = (event, blankNumber, matrix, matrixWins) => {
+  const buttonNode = event.target.closest('button');
 
   if (!buttonNode) {
     return;
@@ -258,19 +232,12 @@ function swap(coorder1, coorder2, matrix, winArray) {
     addWonClass();
     stopTime();
     const existedResult = getLocalStorage(LOCAL_STORAGE_KEYS.RESULTS) ?? [];
-    setLocalStorage(
-      [...existedResult, { time: state.time, counts: state.counts }],
-      LOCAL_STORAGE_KEYS.RESULTS
-    ); //передаем данные по результатам
+    setLocalStorage([...existedResult, { time: state.time, counts: state.counts }], LOCAL_STORAGE_KEYS.RESULTS); //передаем данные по результатам
     localStorage.removeItem(LOCAL_STORAGE_KEYS.STORAGE); // очищаем local storage, так как запускаем новую игру!
 
     const localResult = getLocalStorage(LOCAL_STORAGE_KEYS.RESULTS);
 
-    if (
-      localResult === null ||
-      localResult === undefined ||
-      localResult.length == 1
-    ) {
+    if (localResult === null || localResult === undefined || localResult.length == 1) {
       addDataInInLocal();
     } else {
       updateResults();
@@ -314,14 +281,14 @@ async function playSound(state, sound) {
 
 function sound() {
   if (state.stateSound) {
-    buttonMusic.innerHTML = "Sound Off";
-    buttonMusic.classList.remove("soundOn");
-    buttonMusic.classList.add("soundOff");
+    buttonMusic.innerHTML = 'Sound Off';
+    buttonMusic.classList.remove('soundOn');
+    buttonMusic.classList.add('soundOff');
     state.stateSound = false;
   } else {
-    buttonMusic.innerHTML = "Sound On";
-    buttonMusic.classList.remove("soundOff");
-    buttonMusic.classList.add("soundOn");
+    buttonMusic.innerHTML = 'Sound On';
+    buttonMusic.classList.remove('soundOff');
+    buttonMusic.classList.add('soundOn');
     state.stateSound = true;
   }
 }
@@ -346,10 +313,10 @@ function startCounter() {
 
 function startTime() {
   if (state.seconds < 10) {
-    state.seconds = "0" + state.seconds;
+    state.seconds = '0' + state.seconds;
   }
 
-  state.time = state.minutes + ":" + state.seconds;
+  state.time = state.minutes + ':' + state.seconds;
   state.seconds++;
   if (state.seconds > 60) {
     state.seconds = 0;
@@ -370,7 +337,7 @@ function resetTime() {
   stopTime();
   state.seconds = 0;
   state.minutes = 0;
-  state.time = "0" + ":" + "00";
+  state.time = '0' + ':' + '00';
   timerPuzzle.innerText = state.time;
 }
 

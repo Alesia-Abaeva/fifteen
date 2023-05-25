@@ -1,4 +1,8 @@
-# Gem Puzzle ([game of fifteen]((https://en.wikipedia.org/wiki/15_puzzle)))
+# Gem Puzzle ([game of fifteen](<(https://en.wikipedia.org/wiki/15_puzzle)>))
+
+## Deploy
+
+[Game of fifteen](<(https://en.wikipedia.org/wiki/15_puzzle)>)
 
 ## Task
 
@@ -11,7 +15,6 @@
 ## Screenshot
 
 ![image](https://github.com/Alesia-Abaeva/fifteen/assets/101274979/cbf748c5-aa72-4388-8fa7-5839a59f0a63)
-
 
 ### Key features
 

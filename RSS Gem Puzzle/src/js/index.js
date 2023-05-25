@@ -153,7 +153,7 @@ function changeSize(number, template, style) {
   addClass(state.itemNodes, `${style}`);
 
   // генерим новую матрицу
-  let orderMatrix = getMatrix(
+  const orderMatrix = getMatrix(
     state.itemNodes.map((items) => Number(items.dataset.matrixId)),
     template,
     state.countElementInLine

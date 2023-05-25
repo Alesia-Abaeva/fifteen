@@ -2,6 +2,7 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const HtmlWebpackHarddiskPlugin = require('html-webpack-harddisk-plugin');
 const ESLintPlugin = require('eslint-webpack-plugin');
+
 const srcPath = path.join(__dirname, 'src');
 const assetsPath = path.join(__dirname, 'assets');
 const utilsPath = path.join(__dirname, 'src', 'utils');

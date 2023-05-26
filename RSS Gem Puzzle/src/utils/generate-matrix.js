@@ -1,5 +1,5 @@
 export function generateMatrix(number) {
-  let array = [];
+  const array = [];
   for (let i = 0; i < number; i++) {
     array.push([]);
   }

@@ -1,4 +1,5 @@
-import { findCoordinatesByNumber, isOdd } from "../utils";
+import { findCoordinatesByNumber } from '../find-coordinate';
+import { isOdd } from '../is-odd';
 
 export function isSolvable(matrix) {
   let isSolvable = false;
@@ -28,6 +29,7 @@ export function isSolvable(matrix) {
         isSolvable = false;
       }
       break;
+    default:
   }
 
   return isSolvable;
@@ -35,12 +37,11 @@ export function isSolvable(matrix) {
 
 function positionBlank(matrix) {
   const number = matrix.flat().length;
-  let position = findCoordinatesByNumber(number, matrix).y;
-  return position;
+  return findCoordinatesByNumber(number, matrix).y;
 }
 
 function reversArray(array) {
-  let filteredArray = array.filter((elements) => elements < array.length);
+  const filteredArray = array.filter((elements) => elements < array.length);
 
   let count = 0;
   for (let i = filteredArray.length - 1; i >= 1; i--) {

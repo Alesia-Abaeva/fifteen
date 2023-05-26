@@ -12,6 +12,9 @@
   },
   "root": true,
   "rules": {
+    "prefer-template": "off",
+    "no-param-reassign": "off",
+    "no-restricted-globals": "off",
     "no-shadow": "off",
     "no-debugger": "off",
     "no-console": 0,
@@ -29,6 +32,15 @@
         "allowTernary": true,
         "allowTaggedTemplates": true,
         "enforceForJSX": true
+      }
+    ],
+    "no-use-before-define": [
+      "error",
+      {
+        "functions": false,
+        "classes": true,
+        "variables": true,
+        "allowNamedExports": false
       }
     ],
     "prettier/prettier": [

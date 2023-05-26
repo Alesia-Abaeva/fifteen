@@ -1,12 +1,12 @@
 import '../style/style.scss';
-import { addValues } from './add-nodes';
 import audio1 from 'assets/sounds/audio_1.mp3';
-import { isSolvable } from './is-solvable';
-import { addDataInInLocal, updateResults } from './results';
+import { closeModal, openModal, Results } from '../components';
+import { addDataInInLocal, updateResults } from '../components/Result/utils/results';
 import { LOCAL_STORAGE_KEYS } from '../const/local-storage';
 import {
+  addValues,
   addClass,
-  dragAndDrop,
+  isWon,
   findCoordinatesByNumber,
   generateMatrix,
   getLocalStorage,
@@ -17,10 +17,9 @@ import {
   setLocalStorage,
   setNodeStyles,
   shuffleArray,
+  isSolvable,
 } from '../utils';
-import { openModal } from '../components/Modal/utils/open-modal';
-import { closeModal } from '../components/Modal/utils/close-modal';
-import { Results } from '../components/Result/Result';
+
 import { renderApp } from './app';
 
 export const state = getLocalStorage(LOCAL_STORAGE_KEYS.STORAGE) ?? {
@@ -73,8 +72,8 @@ function initGame() {
 
   addClass(state.itemNodes, `size${state.countItem}`);
 
-  if (getLocalStorage(LOCAL_STORAGE_KEYS.STORAGE) === null) {
-    let orderMatrix = getMatrix(state.itemNodes.map((items) => Number(items.dataset.matrixId)));
+  if (!getLocalStorage(LOCAL_STORAGE_KEYS.STORAGE)) {
+    const orderMatrix = getMatrix(state.itemNodes.map((items) => Number(items.dataset.matrixId)));
     let matrixVerif = getMatrix(shuffleArray(orderMatrix.flat()));
 
     while (!isSolvable(matrixVerif)) {
@@ -82,7 +81,7 @@ function initGame() {
     }
     state.matrix = matrixVerif;
   } else {
-    state.matrix;
+    // state.matrix;
     startTime();
     state.clockTick = setInterval(startTime, 1000);
     removeClass(sizeButton, 'active-button');
@@ -191,10 +190,6 @@ function shuffle() {
 
 // Change position on click
 
-container.addEventListener('click', (event) => {
-  ChangePositionOnClick(event, state.blankNumber, state.matrix, state.winArray);
-});
-
 export const ChangePositionOnClick = (event, blankNumber, matrix, matrixWins) => {
   const buttonNode = event.target.closest('button');
 
@@ -222,6 +217,10 @@ export const ChangePositionOnClick = (event, blankNumber, matrix, matrixWins) =>
   }
 };
 
+container.addEventListener('click', (event) => {
+  ChangePositionOnClick(event, state.blankNumber, state.matrix, state.winArray);
+});
+
 function swap(coorder1, coorder2, matrix, winArray) {
   const coords1Number = matrix[coorder1.y][coorder1.x];
   matrix[coorder1.y][coorder1.x] = matrix[coorder2.y][coorder2.x];
@@ -232,27 +231,17 @@ function swap(coorder1, coorder2, matrix, winArray) {
     addWonClass();
     stopTime();
     const existedResult = getLocalStorage(LOCAL_STORAGE_KEYS.RESULTS) ?? [];
-    setLocalStorage([...existedResult, { time: state.time, counts: state.counts }], LOCAL_STORAGE_KEYS.RESULTS); //передаем данные по результатам
+    setLocalStorage([...existedResult, { time: state.time, counts: state.counts }], LOCAL_STORAGE_KEYS.RESULTS); // передаем данные по результатам
     localStorage.removeItem(LOCAL_STORAGE_KEYS.STORAGE); // очищаем local storage, так как запускаем новую игру!
 
     const localResult = getLocalStorage(LOCAL_STORAGE_KEYS.RESULTS);
 
-    if (localResult === null || localResult === undefined || localResult.length == 1) {
+    if (localResult === null || localResult === undefined || localResult.length === 1) {
       addDataInInLocal();
     } else {
       updateResults();
     }
   }
-}
-
-function isWon(matrix, winArray) {
-  const flatMatrix = matrix.flat();
-  for (let i = 0; i < winArray.length; i++) {
-    if (flatMatrix[i] !== winArray[i]) {
-      return false;
-    }
-  }
-  return true;
 }
 
 function addWonClass() {
@@ -300,7 +289,7 @@ buttonMusic.onclick = () => {
 
 // Moves
 function resetCounter() {
-  state.counts = 0; //add
+  state.counts = 0;
   machCount.innerHTML = `${state.counts}`;
 }
 
@@ -328,7 +317,7 @@ function startTime() {
 
 // stop timer for game
 function stopTime() {
-  let finalTime = state.time;
+  const finalTime = state.time;
   clearInterval(state.clockTick);
   state.firstClick = false;
 }
@@ -337,7 +326,7 @@ function resetTime() {
   stopTime();
   state.seconds = 0;
   state.minutes = 0;
-  state.time = '0' + ':' + '00';
+  state.time = '0:00';
   timerPuzzle.innerText = state.time;
 }
 
@@ -351,3 +340,30 @@ buttonSave.onclick = () => {
   state.save = true;
   setLocalStorage(state, LOCAL_STORAGE_KEYS.STORAGE);
 };
+
+function dragstart(event) {
+  setTimeout(() => {
+    event.target.classList.add('hide');
+  }, 0);
+}
+
+function dragend(event) {
+  ChangePositionOnClick(event, state.blankNumber, state.matrix, state.winArray);
+  setTimeout(() => {
+    event.target.classList.remove('hide');
+  }, 180);
+}
+
+function dragover(event) {
+  event.preventDefault();
+}
+
+export function dragAndDrop() {
+  const container = document.querySelector('.puzzle__container');
+  const item = [...document.querySelectorAll('.item')];
+
+  item.forEach((elem) => addEventListener('dragstart', dragstart));
+  item.forEach((elem) => addEventListener('dragend', dragend));
+
+  container.addEventListener('dragover', dragover);
+}

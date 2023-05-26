@@ -1,4 +1,4 @@
 export const LOCAL_STORAGE_KEYS = {
-  STORAGE: "storage",
-  RESULTS: "results",
+  STORAGE: 'storage',
+  RESULTS: 'results',
 };

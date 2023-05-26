@@ -9,3 +9,6 @@ export * from './is-odd';
 export * from './generate-matrix';
 export * from './get-matrix';
 export * from './render-child-node';
+export * from './game/is-won';
+export * from './game/is-solvable';
+export * from './add-values';

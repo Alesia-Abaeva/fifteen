@@ -9,7 +9,7 @@ const utilsPath = path.join(__dirname, 'src', 'utils');
 
 module.exports = {
   entry: {
-    index: './src/js/index.js',
+    index: './src/index.js',
   },
   devtool: 'inline-source-map',
   devServer: {

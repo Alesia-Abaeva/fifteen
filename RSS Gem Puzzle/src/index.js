@@ -1,8 +1,8 @@
-import '../style/style.scss';
+import './style/style.scss';
 import audio1 from 'assets/sounds/audio_1.mp3';
-import { closeModal, openModal, Results } from '../components';
-import { addDataInInLocal, updateResults } from '../components/Result/utils/results';
-import { LOCAL_STORAGE_KEYS } from '../const/local-storage';
+import { closeModal, openModal, Results } from './components';
+import { addDataInInLocal, updateResults } from './components/Result/utils/results';
+import { LOCAL_STORAGE_KEYS } from './const/local-storage';
 import {
   addValues,
   addClass,
@@ -18,9 +18,9 @@ import {
   setNodeStyles,
   shuffleArray,
   isSolvable,
-} from '../utils';
+} from './utils';
 
-import { renderApp } from './app';
+import { renderApp } from './App';
 
 export const state = getLocalStorage(LOCAL_STORAGE_KEYS.STORAGE) ?? {
   matrix: [],

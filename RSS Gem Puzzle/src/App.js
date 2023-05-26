@@ -1,8 +1,8 @@
-import { ButtonSettings } from '../components/Button/BSettings/Settings';
-import { ButtonSize } from '../components/Button/BSize/Size';
-import { InformationContainer } from '../components/Information/Information';
-import { createModal } from '../components/Modal/Modal';
-import { renderChildNode } from '../utils';
+import { ButtonSettings } from './components/Button/BSettings/Settings';
+import { ButtonSize } from './components/Button/BSize/Size';
+import { InformationContainer } from './components/Information/Information';
+import { createModal } from './components/Modal/Modal';
+import { renderChildNode } from './utils';
 
 export const renderApp = () => {
   const PARENT = '.puzzle__wrapper';
